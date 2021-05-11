@@ -39,7 +39,7 @@ export default function Form() {
           </select>
         </div>
         <div>
-          <label htmlFor="epoint">終點</label>
+          <label htmlFor="epoint">終點站</label>
           <select name="epoint">
             <option value="0">台北</option>
             <option value="1">新竹</option>
