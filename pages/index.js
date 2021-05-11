@@ -29,7 +29,7 @@ export default function Form() {
     <>
       <form onSubmit={fetchDepartureTime}>
         <div>
-          <label htmlFor="spoint">起點</label>
+          <label htmlFor="spoint">起點站</label>
           <select name="spoint">
             <option value="0">台北</option>
             <option value="1">新竹</option>
