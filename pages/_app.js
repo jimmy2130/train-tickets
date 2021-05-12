@@ -1,7 +1,15 @@
-import '../styles/globals.css'
+import GlobalStyles from '../src/components/GlobalStyles';
+import styled from 'styled-components'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps }) {
+  return (
+    <Wrapper>
+      <GlobalStyles />
+      <Component {...pageProps} />
+    </Wrapper>
+  )
 }
 
-export default MyApp
+const Wrapper = styled.div`
+  height: 100%;
+`
