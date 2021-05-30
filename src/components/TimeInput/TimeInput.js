@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { COLORS, WEIGHTS } from '../../constants';
 
 
-const TimeInput = ({ label, setHour, setMinute, ...delegated }) => {
+const TimeInput = ({ label, onHourChange, onMinuteChange }) => {
   return (
     <Wrapper>
       <VisibleLabel>{label}</VisibleLabel>
@@ -12,14 +12,14 @@ const TimeInput = ({ label, setHour, setMinute, ...delegated }) => {
         <HourInput
           placeholder="HH"
           maxLength="2"
-          onChange={(ev) => setHour(ev.target.value)}
+          onChange={onHourChange}
           required
         ></HourInput>
         <Colon>:</Colon>
         <MinuteInput
           placeholder="MM"
           maxLength="2"
-          onChange={(ev) => setMinute(ev.target.value)}
+          onChange={onMinuteChange}
           required
         ></MinuteInput>
       </InputWrapper>

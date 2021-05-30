@@ -1,7 +1,35 @@
+import * as React from 'react'
 import styled from 'styled-components'
 import { COLORS, WEIGHTS } from '../../constants'
 
-const Result = ({ dTime }) => {
+const Result = ({ input, submit, resetSubmit }) => {
+  const {start, end, year, month, day, hour, minute} = input
+  const [dTime, setDTime] = React.useState([])
+
+  const fetchDepartureTime = async () => {
+    const res = await fetch('/api/departure', {
+      body: JSON.stringify({
+        spoint: start,
+        epoint: end,
+        date: `${year}-${month}-${day}`,
+        time: `${hour}:${minute}`
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+    const result = await res.json()
+    return result
+  }
+
+  React.useEffect(() => {
+    if(submit) {
+      resetSubmit()
+      fetchDepartureTime().then(result => setDTime(result.dTime))
+    }
+  }, [submit])
+
   return(
     <>
       <FirstResult>{dTime[0]}</FirstResult>

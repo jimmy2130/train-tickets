@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import Select from '../src/components/Select'
 import DateInput from '../src/components/DateInput'
@@ -8,43 +8,37 @@ import Spacer from '../src/components/Spacer'
 import { COLORS, WEIGHTS, STATIONS } from '../src/constants'
 
 export default function Home() {
-  const [dTime, setDTime] = useState([])
-  const fetchDepartureTime = async (event) => {
+
+  const handleSubmit = (event) => {
     event.preventDefault()
-
-    const res = await fetch('/api/departure', {
-      body: JSON.stringify({
-        spoint: start,
-        epoint: end,
-        date: `${year}-${month}-${day}`,
-        time: `${hour}:${minute}`
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    })
-
-    const result = await res.json()
-    setDTime(result.dTime);
+    setSubmit(true)
   }
 
-  const [start, setStart] = useState(STATIONS.taipei);
-  const [end, setEnd] = useState(STATIONS.kaohsiung);
-  const [year, setYear] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [hour, setHour] = useState('');
-  const [minute, setMinute] = useState('');
+  const initialState = {
+    start: STATIONS.taipei,
+    end: STATIONS.kaohsiung,
+    year: '',
+    month: '',
+    day: '',
+    hour: '',
+    minute: '',   
+  }
+
+  const [input, setInput] = React.useState(initialState)
+  const [submit, setSubmit] = React.useState(false)
+  const resetSubmit = () => setSubmit(false)
+
+  const {start, end, year, month, day, hour, minute} = input
 
   return (
     <Wrapper>
       <FormWrapper>
-        <Form onSubmit={fetchDepartureTime}>
+        <Form onSubmit={handleSubmit}>
           <Select
             label="出發站"
             value={start}
-            onChange={(ev) => setStart(ev.target.value)}
+            id="start"
+            onChange={(ev) => setInput({...input, start: ev.target.value})}
           >
               <option value={STATIONS.taipei}>台北</option>
               <option value={STATIONS.hsincue}>新竹</option>
@@ -56,7 +50,7 @@ export default function Home() {
           <Select
             label="抵達站"
             value={end}
-            onChange={(ev) => setEnd(ev.target.value)}
+            onChange={(ev) => setInput({...input, end: ev.target.value})}
           >
               <option value={STATIONS.taipei}>台北</option>
               <option value={STATIONS.hsincue}>新竹</option>
@@ -67,16 +61,16 @@ export default function Home() {
           <Spacer size={16} />
           <DateInput
             label="日期"
-            setYear={setYear}
-            setMonth={setMonth}
-            setDay={setDay}
+            onYearChange={event => setInput({...input, year: event.target.value})}
+            onMonthChange={event => setInput({...input, month: event.target.value})}
+            onDayChange={event => setInput({...input, day: event.target.value})}
           >
           </DateInput>
           <Spacer size={16} />
           <TimeInput
             label="出發時間"
-            setHour={setHour}
-            setMinute={setMinute}
+            onHourChange={event => setInput({...input, hour: event.target.value})}
+            onMinuteChange={event => setInput({...input, minute: event.target.value})}
           >
           </TimeInput>
           <Spacer size={40} />
@@ -84,7 +78,11 @@ export default function Home() {
         </Form>
       </FormWrapper>
       <ResultWrapper>
-        <Result dTime={dTime} />       
+        <Result
+          input={input}
+          submit={submit}
+          resetSubmit={resetSubmit}
+        />
       </ResultWrapper>
     </Wrapper>
   )

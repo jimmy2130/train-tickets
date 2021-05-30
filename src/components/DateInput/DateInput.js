@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { COLORS, WEIGHTS } from '../../constants';
 
 
-const DateInput = ({ label, setYear, setMonth, setDay, ...delegated }) => {
+const DateInput = ({ label, onYearChange, onMonthChange, onDayChange }) => {
   return (
     <Wrapper>
       <VisibleLabel>{label}</VisibleLabel>
@@ -12,21 +12,21 @@ const DateInput = ({ label, setYear, setMonth, setDay, ...delegated }) => {
         <YearInput
           placeholder="YYYY"
           maxLength="4"
-          onChange={(ev) => setYear(ev.target.value)}
+          onChange={onYearChange}
           required
         ></YearInput>
         <Slash>/</Slash>
         <MonthInput
           placeholder="MM"
           maxLength="2"
-          onChange={(ev) => setMonth(ev.target.value)}
+          onChange={onMonthChange}
           required
         ></MonthInput>
         <Slash>/</Slash>
         <DayInput
           placeholder="DD"
           maxLength="2"
-          onChange={(ev) => setDay(ev.target.value)}
+          onChange={onDayChange}
           required
         ></DayInput>
       </InputWrapper>
