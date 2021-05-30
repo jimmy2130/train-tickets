@@ -31,7 +31,7 @@ export default function Home() {
   const {start, end, year, month, day, hour, minute} = input
 
   return (
-    <Wrapper>
+    <WrapperTest>
       <FormWrapper>
         <Form onSubmit={handleSubmit}>
           <Select
@@ -84,11 +84,11 @@ export default function Home() {
           resetSubmit={resetSubmit}
         />
       </ResultWrapper>
-    </Wrapper>
+    </WrapperTest>
   )
 }
 
-const Wrapper = styled.div`
+const WrapperTest = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
